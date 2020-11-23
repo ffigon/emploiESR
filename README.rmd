@@ -1,32 +1,47 @@
 ---
 title: "README"
-author: "Florent Figon"
 date: "23/11/2020"
 output: 
-  html_document:
-    keep_md: true
+  github_document:
+    toc: true
+    number_sections: TRUE
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+# Fichiers
+## Bases de données
+DB_CNU_QualificationRecrutements_20201123.csv
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Analyses
+emploiESR.md
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Graphiques
+plot_CandidaturesParPosteMCF-1.png
 
-```{r cars}
-summary(cars)
-```
+plot_CandidatsParPosteMCF-1.png
 
-## Including Plots
+plot_CandidaturesParCandidatMCF-1.png
 
-You can also embed plots, for example:
+# Sources
+## Qualifications MCF/PR
+2019 : https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/97/8/Qualif_Tableaux_excel_campagne_2019_1309978.xlsx
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+2013 : https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/28/3/Qualif_2013_V15_379283.xlsx
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Recrutements MCF/PR
+2019 : https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/20/3/Tableaux_excel_campagne_2019_recrutement_1328203.xlsx
+
+2018 : https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/02/8/Recrutement_Tableaux_2018_1159028.xlsx
+
+2017 : https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/89/6/Tableaux_excel_campagne_2017_1015896.xlsx
+
+2016 : https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/12/6/Tableaux_excel_campagne_de_recrutement_2016_800126.xlsx
+
+2015 : https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/22/1/Bilan_final_Recrutement_2015_604221.xlsx
+
+2014 : https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/14/0/Bilan_recrutement_2014_405140.xlsx
+
+2013 : https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/00/6/bilrec13_327006.pdf
