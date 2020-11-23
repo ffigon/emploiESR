@@ -1,33 +1,140 @@
 emploiESR
 ================
 
-## GitHub Documents
+  - [1 L’emploi dans l’ESR](#lemploi-dans-lesr)
+      - [1.1 Description](#description)
+      - [1.2 Analyse des recrutements
+        MCF](#analyse-des-recrutements-mcf)
+          - [1.2.1 Nombre moyen de candidatures par poste de
+            MCF](#nombre-moyen-de-candidatures-par-poste-de-mcf)
+          - [1.2.2 Nombre moyen de candidats par poste de
+            MCF](#nombre-moyen-de-candidats-par-poste-de-mcf)
+          - [1.2.3 Nombre moyen de candidatures par candidat aux postes
+            de
+            MCF](#nombre-moyen-de-candidatures-par-candidat-aux-postes-de-mcf)
+  - [2 Sources](#sources)
+      - [2.1 Qualifications MCF/PR](#qualifications-mcfpr)
+      - [2.2 Recrutements MCF/PR](#recrutements-mcfpr)
 
-This is an R Markdown format used for publishing markdown documents to
-GitHub. When you click the **Knit** button all R code chunks are run and
-a markdown file (.md) suitable for publishing to GitHub is generated.
+# 1 L’emploi dans l’ESR
 
-## Including Code
+## 1.1 Description
 
-You can include R code in the document as follows:
+Ce document rassemble les analyses sur les statistiques et dynamiques
+des emplois dans l’ESR, incluant entre autres les qualifications CNU,
+les recrutements MCF/PU ou les recrutements dans les EPST (CNRS, INSERM,
+etc.).
+
+## 1.2 Analyse des recrutements MCF
+
+### 1.2.1 Nombre moyen de candidatures par poste de MCF
 
 ``` r
-summary(cars)
+library(ggplot2)
+library(ggbeeswarm)
+library("gridExtra")
+data_CNU = read.table("DB_CNU_QualificationRecrutements_20201123.csv", h=T, sep=";")
+tapply(data_CNU$Candidatures.MCF/data_CNU$PostesPublies.MCF, data_CNU$TypeRecrutement, mean, na.rm=T)
 ```
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+    ##     CNU 
+    ## 33.4269
 
-## Including Plots
+``` r
+plot_CandidaturesParPosteMCF = ggplot(data_CNU, aes(x = GrandeDisciplineCNU, y = Candidatures.MCF/PostesPublies.MCF, color=GroupeCNU)) + 
+  geom_beeswarm(cex = 1, dodge.width = 0.8) + 
+  geom_hline(yintercept=33.4269, linetype="dashed", color = "red") + 
+  stat_summary(fun=mean, geom="point", shape=15, size=3, color="red") + 
+  labs(title="Recrutements MCF par section, de 2013 à 2019", x ="Grandes disciplines CNU", y = "Nombre moyen de candidatures par poste de MCF") +
+  labs(color = "Groupes CNU") + 
+  annotate(geom="text", x=3, y=36, label="Moyenne globale", color="red")
+```
 
-You can also embed plots, for example:
+    ## Warning: Removed 464 rows containing non-finite values (stat_summary).
 
-![](emploiESR_files/figure-gfm/pressure-1.png)<!-- -->
+    ## Warning: Removed 464 rows containing missing values (position_beeswarm).
 
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+![](emploiESR_files/figure-gfm/plot_CandidaturesParPosteMCF-1.png)<!-- -->
+
+### 1.2.2 Nombre moyen de candidats par poste de MCF
+
+``` r
+tapply(data_CNU$Candidats.MCF/data_CNU$PostesPublies.MCF, data_CNU$TypeRecrutement, mean, na.rm=T)
+```
+
+    ##      CNU 
+    ## 13.65133
+
+``` r
+plot_CandidatsParPosteMCF = ggplot(data_CNU, aes(x = GrandeDisciplineCNU, y = Candidats.MCF/PostesPublies.MCF, color=GroupeCNU)) + 
+  geom_beeswarm(cex = 1, dodge.width = 0.8) + 
+  geom_hline(yintercept=13.65133, linetype="dashed", color = "red") + 
+  stat_summary(fun=mean, geom="point", shape=15, size=3, color="red") + 
+  labs(title="Recrutements MCF par section, de 2013 à 2019", x ="Grandes disciplines CNU", y = "Nombre moyen de candidats par poste de MCF") +
+  labs(color = "Groupes CNU") + 
+  annotate(geom="text", x=1, y=15, label="Moyenne globale", color="red")
+```
+
+    ## Warning: Removed 464 rows containing non-finite values (stat_summary).
+
+    ## Warning: Removed 464 rows containing missing values (position_beeswarm).
+
+![](emploiESR_files/figure-gfm/plot_CandidsParPosteMCF-1.png)<!-- -->
+
+### 1.2.3 Nombre moyen de candidatures par candidat aux postes de MCF
+
+``` r
+tapply(data_CNU$Candidatures.MCF/data_CNU$Candidats.MCF, data_CNU$TypeRecrutement, mean, na.rm=T)
+```
+
+    ##      CNU 
+    ## 3.118721
+
+``` r
+plot_CandidaturesParCandidatsMCF = ggplot(data_CNU, aes(x = GrandeDisciplineCNU, y = Candidatures.MCF/Candidats.MCF, color=GroupeCNU)) + 
+  geom_beeswarm(cex = 1, dodge.width = 0.8) + 
+  geom_hline(yintercept=3.118721, linetype="dashed", color = "red") + 
+  stat_summary(fun=mean, geom="point", shape=15, size=3, color="red") + 
+  labs(title="Recrutements MCF par section, de 2013 à 2019", x ="Grandes disciplines CNU", y = "Nombre moyen de candidatures par candidat aux postes de MCF") +
+  labs(color = "Groupes CNU") + 
+  annotate(geom="text", x=3, y=3.8, label="Moyenne globale", color="red")
+```
+
+    ## Warning: Removed 464 rows containing non-finite values (stat_summary).
+
+    ## Warning: Removed 464 rows containing missing values (position_beeswarm).
+
+![](emploiESR_files/figure-gfm/plot_CandiduresParCandidatsMCF-1.png)<!-- -->
+
+# 2 Sources
+
+## 2.1 Qualifications MCF/PR
+
+2019 :
+<https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/97/8/Qualif_Tableaux_excel_campagne_2019_1309978.xlsx>
+
+2013 :
+<https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/28/3/Qualif_2013_V15_379283.xlsx>
+
+## 2.2 Recrutements MCF/PR
+
+2019 :
+<https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/20/3/Tableaux_excel_campagne_2019_recrutement_1328203.xlsx>
+
+2018 :
+<https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/02/8/Recrutement_Tableaux_2018_1159028.xlsx>
+
+2017 :
+<https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/89/6/Tableaux_excel_campagne_2017_1015896.xlsx>
+
+2016 :
+<https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/12/6/Tableaux_excel_campagne_de_recrutement_2016_800126.xlsx>
+
+2015 :
+<https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/22/1/Bilan_final_Recrutement_2015_604221.xlsx>
+
+2014 :
+<https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/14/0/Bilan_recrutement_2014_405140.xlsx>
+
+2013 :
+<https://cache.media.enseignementsup-recherche.gouv.fr/file/statistiques/00/6/bilrec13_327006.pdf>
